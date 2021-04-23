@@ -1,0 +1,260 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>雷达基础1 | 森灵</title><meta name="author" content="森岭之灵"><meta name="copyright" content="森岭之灵"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第六周学习报告                                ——查漏补缺                        2021.4.17  目录1.引言    32.低通信号，正交信号等的学习    32.1低通信号与带通信号    32.2解析信号    32.2.1解析信号的内容    32.2.2解析信号小结    43.正交相干检波与正交解调    44.匹配滤波器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="雷达基础1">
+<meta property="og:url" content="http://senling.xyz/2021/04/15/%E6%AD%A3%E4%BA%A4%E6%A3%80%E6%B3%A2/index.html">
+<meta property="og:site_name" content="森灵">
+<meta property="og:description" content="第六周学习报告                                ——查漏补缺                        2021.4.17  目录1.引言    32.低通信号，正交信号等的学习    32.1低通信号与带通信号    32.2解析信号    32.2.1解析信号的内容    32.2.2解析信号小结    43.正交相干检波与正交解调    44.匹配滤波器">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-04-15T12:21:12.000Z">
+<meta property="article:modified_time" content="2021-04-23T04:31:41.888Z">
+<meta property="article:author" content="森岭之灵">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://senling.xyz/2021/04/15/%E6%AD%A3%E4%BA%A4%E6%A3%80%E6%B3%A2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2021-04-23 12:31:41'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><style type="text/css">#toggle-sidebar {left:100px}</style><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/fas%20fa-home"><span> Home</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">森灵</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/fas%20fa-home"><span> Home</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">雷达基础1<a class="post-edit-link" href="https://github.com/jerryc127/butterfly.js.org/edit/main/source/_posts/正交检波.md" title="Edited on" target="_blank"><i class="fas fa-pencil-alt"></i></a></h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-04-15T12:21:12.000Z" title="Created 2021-04-15 20:21:12">2021-04-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-04-23T04:31:41.888Z" title="Updated 2021-04-23 12:31:41">2021-04-23</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="雷达基础1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>第六周学习报告<br>                                ——查漏补缺</p>
+<pre><code>                       2021.4.17
+</code></pre>
+<p>目录<br>1.引言    3<br>2.低通信号，正交信号等的学习    3<br>2.1低通信号与带通信号    3<br>2.2解析信号    3<br>2.2.1解析信号的内容    3<br>2.2.2解析信号小结    4<br>3.正交相干检波与正交解调    4<br>4.匹配滤波器    5<br>5.高距离分辨率(HRR)    5<br>6.小结    6</p>
+<p>1.引言<br>我在之前的学习，常常不求甚解，很多东西的没有深入了解，比如正交调制，正交检波等，这也让我在学习新的知识时不明所以，正交调频是为了什么，什么是基带，低通信号以及带通信号我都不是很清楚，所以我决定对从前的知识查漏补缺，同时学习一下BP成像的知识。<br>2.低通信号，正交信号等的学习<br>2.1低通信号与带通信号<br>如果信号包含的主要频率处于包括直流(DC)在内的低频频带,则称其为低通(LP)信号。<br>如果信号包含的主要频率处于离开原点的某个频率附近,则称其为带通(BP)信号。一个实带通信号x(t)在数学上可表示为:<br>x(t)=r(t)cos⁡(2πf_0 t+ϕ_x (t))<br>R(t)是幅度调制，ϕ_x (t)是相位调制，f_0是载波频率，r(t）与ϕ_x (t)<br>都比f_0要小，调制频率f_m为：<br>f_m (t)=1/2π  d/dt ϕ_x (t)<br>瞬时频率为<br>f_i (t)=1/2π  d/dt (2πf_0 t+ϕ_x (t))=f_0+f_m (t)<br>如果信号带宽为B,并且f_0远大于B，则信号x(t)被称为窄带信号。<br>带通信号也可以用两个称为正交分量的低通信号表示，此时x(t)可以表示为<br>x(t)=x_I (t)cos⁡2πf_0 t-x_Q (t)sin⁡2πf_0 t<br>正交分量分别表示为<br>█(x_1 (t)=r(t)cos⁡ϕ_x (t)@x_Q (t)=r(t)sin⁡ϕ_x (t))</p>
+<p>2.2解析信号<br>2.2.1解析信号的内容<br>x(t)可以表示为复信号ψ(t)的实部<br>x(t)=Re⁡{ψ(t)}=Re⁡{r(t) e^(jϕ_x (t) ) e^(j2πf_0 t) }<br>定义解析信号为<br>ψ(t)=v(t)e^(j2πf_0 t)<br>其中<br>v(t)=r(t)e^(jϕ_x (t))<br>傅里叶变换后<br>Ψ(ω)=(■(2X(ω)&amp;ω⩾0@0&amp;ω&lt;0)<br>可以写成<br>Ψ(ω)=2U(ω)X(ω)<br>可以得出<br>ψ(t)=x(t)+j x┴~ (t)<br>x┴<del>是x(t)的希尔伯特变换，结合上式可以得出<br>x(t)=u_0I (t)cos⁡ω_0 t-u_0Q (t)sin⁡ω_0 t<br>式中ω_0=2πf_0。<br>根据帕塞瓦尔定理，可以得到x(t)的能量为<br>E_x=1/2 ∫_(-∞)^∞▒〖x^2 (t)dt〗=1/2 ∫_(-∞)^∞▒〖u^2 (t)dt〗=1/2 E_ψ<br>2.2.2解析信号小结<br>感觉有点奇怪，好像与我之前学习的东西，没有多少涉及的地方，可能以后会用到，感觉好像是求带通信号能量的一种方法？<br>3.正交相干检波与正交解调<br>正交相干检波就是将中频信号变为两路数字信号I(t)与Q(t)，I(t)与Q(T)分别称为信号复包络的同相分量与正交分量。它们保留了信号复包络的所有信息，因而在雷达、声纳、通信等电子系统中得到了广泛的应用。<br>一个电子系统中所接收到的中频信号可以表示为：<br>■(r(t)=&amp;Re⁡{S(t)e^(j[ω_0 t+φ(t)])}@&amp;=Re⁡{S┴</del> (t)e^(jω_0 t)})<br>S┴~ (t)=S(t) e^jφ(t) 称为信号的复包络。ω_0=2π<br>Re表示取复数的实部，又S┴~ (t)可以表示为：<br>■(S┴~ (t)&amp;=S(t)cos⁡φ(t)+jS(t)sin⁡φ(t)@&amp;=I(t)+jQ(t))<br>式中的I(t)与Q(T)就是上文中的同相分量与正交分量。那么为什么一定要设置这两个分量呢：<br>1.把要传输的数据分成并行的两路（I和Q路）分别进行扩频/加扰。<br>2.分成两路并行处理的目的是充分利用图座图进行调制，图座图有X和Y轴，正好对应I和Q路。<br>3.大部分电路都不支持复数运算，于是有人想到把实部，虚部分别方在不同的存储区域，运算的时候分别按照实虚部运算！就是把一个复数换成两个实属，然后按照实数的运算法则运算。<br>至于中频信号，下面我简单介绍一下信号发射与接收的处理：<br>无线电信号RF（射频）进入天线，转换为IF （中频),再转换为基带（I，Q信号），但仍然是较低的频率。<br>对信号正交检波的方法有很多，我还没有深入了解。下面是正交检波的步骤，其中的混频器我还不是很了解</p>
+<p>4.匹配滤波器<br>匹配滤波器最独特的特征是当输入端出现信号与加性白噪声时，其在输出端产生最大可实现瞬时SNR。此噪声不必为高斯的。接收机输出端的峰值瞬时SNR可以通过将雷达接收机传输函数与接收信号匹配来得到。匹配滤波器输出端的峰值瞬时信号功率除以平均噪声功率，等于两倍的输人信号能量除以输入噪声功率，无论雷达采用何种波形。<br>5.高距离分辨率(HRR)<br>在从前的学习，单脉冲的雷达，可以得到用脉宽τ表示距离分辨率的表达式。当未使用脉冲压缩时，雷达接收的瞬时带宽B通常和脉冲的带宽匹配。这是由于B=1/τ实现的。因此距离分辨率为<br>ΔR=(cτ)/2=c/(2B)<br>利用好脉冲压缩，通过频率和相位的调制，可以使我们获得相当长脉冲的平均发射功率，同时得到对应短脉冲的距离分辨率，如：一个LFM波形，带宽为B，未压缩脉宽为τ。经过脉冲压缩，压缩后的脉宽为τ^’，τ^’≪τ，距离分辨率为：<br>ΔR=(cτ^’)/2≪(cτ)/2<br>不同波形的脉冲压缩来得到HRR的操作也有差别，与LFM和FM-CW相比，步进频波形需要更加复杂的硬件来实现，但对雷达的带宽要求较低，这是因为接收机的瞬时带宽与SFM子脉冲带宽相匹配，小于LFM或FM-CW带宽。<br>6.小结<br>本来打算温故就知识后就学习BP成像，但是发现自己前面的空缺确实有点多，所以这一周就先复习之前的知识了，把之前的知识先搞明白，再去学习BP成像及其他新知识</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">森岭之灵</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://senling.xyz/2021/04/15/%E6%AD%A3%E4%BA%A4%E6%A3%80%E6%B3%A2/">http://senling.xyz/2021/04/15/%E6%AD%A3%E4%BA%A4%E6%A3%80%E6%B3%A2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/04/06/%E9%9B%B7%E8%BE%BE%E6%AD%A5%E8%BF%9B%E8%B0%83%E9%A2%91/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">雷达</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">森岭之灵</div><div class="author-info__description">CGSがんばれ</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/04/15/%E6%AD%A3%E4%BA%A4%E6%A3%80%E6%B3%A2/" title="雷达基础1"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="雷达基础1"/></a><div class="content"><a class="title" href="/2021/04/15/%E6%AD%A3%E4%BA%A4%E6%A3%80%E6%B3%A2/" title="雷达基础1">雷达基础1</a><time datetime="2021-04-15T12:21:12.000Z" title="Created 2021-04-15 20:21:12">2021-04-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/06/%E9%9B%B7%E8%BE%BE%E6%AD%A5%E8%BF%9B%E8%B0%83%E9%A2%91/" title="雷达"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="雷达"/></a><div class="content"><a class="title" href="/2021/04/06/%E9%9B%B7%E8%BE%BE%E6%AD%A5%E8%BF%9B%E8%B0%83%E9%A2%91/" title="雷达">雷达</a><time datetime="2021-04-06T13:54:00.000Z" title="Created 2021-04-06 21:54:00">2021-04-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/05/%E8%87%AA%E5%B7%B1%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2-1/" title="自己的第一篇博客"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="自己的第一篇博客"/></a><div class="content"><a class="title" href="/2021/04/05/%E8%87%AA%E5%B7%B1%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2-1/" title="自己的第一篇博客">自己的第一篇博客</a><time datetime="2021-04-05T04:13:30.000Z" title="Created 2021-04-05 12:13:30">2021-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/04/hello-world/" title="Hello World"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/2021/04/04/hello-world/" title="Hello World">Hello World</a><time datetime="2021-04-04T04:30:02.850Z" title="Created 2021-04-04 12:30:02">2021-04-04</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 森岭之灵</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>function loadUtterances () {
+  let ele = document.createElement('script')
+  ele.setAttribute('id', 'utterances_comment')
+  ele.setAttribute('src', 'https://utteranc.es/client.js')
+  ele.setAttribute('repo', 'jicnn/jack')
+  ele.setAttribute('issue-term', 'title')
+  let nowTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'photon-dark' : 'github-light'
+  ele.setAttribute('theme', nowTheme)
+  ele.setAttribute('crossorigin', 'anonymous')
+  ele.setAttribute('async', 'true')
+  document.getElementById('utterances-wrap').insertAdjacentElement('afterbegin',ele)
+}
+
+function utterancesTheme () {
+  if (document.querySelector('.utterances-frame')) {
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'photon-dark' : 'github-light'
+    const message = {
+      type: 'set-theme',
+      theme: theme
+    };
+    const iframe = document.querySelector('.utterances-frame');
+    iframe.contentWindow.postMessage(message, 'https://utteranc.es');
+  }
+}
+
+if ('Utterances' === 'Utterances' || !false) {
+  if (false) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+  else loadUtterances()
+} else {
+  function loadOtherComment () {
+    loadUtterances()
+  }
+}</script></div><div class="aplayer no-destroy" data-id="7086008336" data-server="tencent" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="true" muted></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
